@@ -1,10 +1,10 @@
-# KAN-BY-ME
+# KANBYME
 
-KAN-BY-ME, applicazione open source per l'organizzazione della propria giornata e di crescita personale!
+KANBYME, applicazione open source per l'organizzazione della propria giornata e di crescita personale!
 
 Crea ogni giorno la tua kanban board e raggiungi tutti i tuoi obiettivi!
 
-E se la nostra vita fosse un grande progetto ==ongoing==?
+> E se la nostra vita fosse un grande progetto ==ongoing==?
 
 ## Development targert
 

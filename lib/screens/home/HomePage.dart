@@ -20,31 +20,47 @@ class MyHomePage extends StatelessWidget {
             Column(
               children: [
                 Text(
-                  'KANBYME',
+                  'KanbyMe',
                   style: TextStyle(
-                    fontSize: 45,
-                    color: Colors.pinkAccent,
+                    fontSize: 80,
+                    color: Theme.of(context).colorScheme.primary,
+                    fontFamily: 'ZenLoop',
+                    fontWeight: FontWeight.bold,
+                    shadows: [
+                      Shadow(
+                        color: Colors.black38,
+                        blurRadius: 15.0,
+                        offset: Offset(2.0,4.0),
+                      )
+                    ]
                   ),
                 ),
                 Text(
                   'Cosa ti va di fare oggi?',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 17,
-                    color: Colors.grey,
+                    fontSize: 15,
+                    color: Theme.of(context).colorScheme.outline,
                   ),
                 ),
               ],
             ),
-            ElevatedButton(
+            ElevatedButton.icon(
+              icon:Icon(
+                CupertinoIcons.plus_circle_fill
+              ),
+             style: ElevatedButton.styleFrom(
+               foregroundColor: Theme.of(context).primaryColorLight,
+               backgroundColor: Theme.of(context).primaryColorDark,
+               elevation: 7
+             ),
               onPressed: () {
-                print('button pressed!');
                 Navigator.push(
                   context,
                   CupertinoPageRoute(builder: (context) => const CreaTasks()),
                 );
               },
-              child: Text('Crea la tua Kanban Board'),
+              label: Text('Crea la tua Kanban Board'),
             ),
           ],
         ),

@@ -53,8 +53,8 @@ class MyHomePage extends StatelessWidget {
                 CupertinoIcons.rocket_fill,
               ),
               style: ElevatedButton.styleFrom(
-                  foregroundColor: Theme.of(context).primaryColorLight,
-                  backgroundColor: Theme.of(context).primaryColorDark,
+                  foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                  backgroundColor: Theme.of(context).colorScheme.primary,
                   elevation: 7),
               onPressed: () {
                 Navigator.push(

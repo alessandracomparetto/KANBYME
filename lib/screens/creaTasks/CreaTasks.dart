@@ -8,54 +8,91 @@ class CreaTasks extends StatefulWidget {
 }
 
 class _CreaTasksState extends State<CreaTasks> {
- List<String> _listaTasks = [];
- final taskController = TextEditingController();
+  List<TaskItem> _listaTasks = [];
+  final taskController = TextEditingController();
 
- @override
- void dispose() {
-   // Clean up the controller when the widget is disposed.
-   taskController.dispose();
-   super.dispose();
- }
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    taskController.dispose();
+    super.dispose();
+  }
 
- void _aggiungiUnaTask(String task) {
-   setState(() {
-    _listaTasks.add(task);
-   });
-   print(_listaTasks);
-   taskController.clear();
- }
+  void _aggiungiUnaTask(String task) {
+    setState(() {
+      _listaTasks.add(TaskItem(task));
+    });
+    taskController.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: ListView(
-          shrinkWrap: true,
-          padding: EdgeInsets.all(15.0),
-          children: [
-            Text('Inserisci i tuoi task',
-            style: TextStyle(
-              fontSize: 30,
-              color: Colors.deepPurple
+    return Scaffold(
+      body: Material(
+        child: Column(children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(9.0, 40.0, 9.0, 0.0),
+            child: Text(
+              'Inserisci i tuoi task',
+              style: TextStyle(
+                  fontSize: 40,
+                  color: Theme.of(context).colorScheme.primary,
+                  fontFamily: 'ZenLoop',
+                  fontWeight: FontWeight.bold,
+                  shadows: [
+                    Shadow(
+                      color: Colors.black38,
+                      blurRadius: 15.0,
+                      offset: Offset(2.0, 4.0),
+                    )
+                  ]),
             ),
+          ),
+          Expanded(
+            //FIXME: sostituire con contenitore che scrolla ma che si espande con il contenuto
+            child: ListView.builder(
+              shrinkWrap: true,
+              padding: EdgeInsets.fromLTRB(9.0, 9.0, 20.0, 0.0),
+              itemCount: _listaTasks.length,
+              itemBuilder: (context, index) {
+                final item = _listaTasks[index];
+                return item.buildTaskItem(context);
+              },
             ),
-            Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: _listaTasks.map((e) => Text(e)).toList(),
-            ),
-            TextField(
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(9.0, 0, 20.0, 9.0),
+            child: TextField(
               decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Inserisci il tuo task',
+                hintText: 'Oggi devo...',
+                icon: Icon(Icons.star_border_rounded),
               ),
               controller: taskController,
               onSubmitted: (val) {
-               _aggiungiUnaTask(taskController.text);
-                }
-            )
-          ]
+                _aggiungiUnaTask(taskController.text);
+              },
+              onEditingComplete: () {},
+            ),
+          )
+        ]),
       ),
     );
   }
+}
+
+/// A ListItem that contains data to display a message.
+class TaskItem {
+  final String taskText;
+
+  TaskItem(this.taskText);
+
+  //TODO: gestione della modifica del task => corrisponde modifica nella lista
+  Widget buildTaskItem(BuildContext context) => TextField(
+        controller: TextEditingController(text: taskText),
+        decoration: InputDecoration(
+            icon: Icon(
+          Icons.star,
+          color: Theme.of(context).colorScheme.secondary,
+        )),
+      );
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class CreaTasks extends StatefulWidget {
   const CreaTasks({super.key});
@@ -19,6 +20,9 @@ class _CreaTasksState extends State<CreaTasks> {
   }
 
   void _aggiungiUnaTask(String task) {
+    if (task.isEmpty) {
+      return;
+    }
     setState(() {
       _listaTasks.add(TaskItem(task, setState));
     });
@@ -61,17 +65,39 @@ class _CreaTasksState extends State<CreaTasks> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(9.0, 0, 20.0, 9.0),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Oggi devo...',
-                icon: Icon(Icons.star_border_rounded),
-              ),
-              controller: taskController,
-              onSubmitted: (val) {
-                _aggiungiUnaTask(taskController.text);
-              },
-              onEditingComplete: () {},
+            padding: const EdgeInsets.fromLTRB(9.0, 0, 9.0, 9.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Oggi devo...',
+                      icon: Icon(Icons.star_border_rounded),
+                    ),
+                    controller: taskController,
+                    onSubmitted: (val) {
+                      _aggiungiUnaTask(taskController.text);
+                    },
+                    onEditingComplete: () {},
+                  ),
+                ),
+                Expanded(
+                  flex: 0,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      _aggiungiUnaTask(taskController.text);
+                    },
+                    style: ElevatedButton.styleFrom(
+                        foregroundColor:
+                            Theme.of(context).colorScheme.onPrimary,
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        elevation: 7),
+                    child: Icon(CupertinoIcons.add),
+                  ),
+                ),
+              ],
             ),
           )
         ]),
@@ -84,21 +110,15 @@ class _CreaTasksState extends State<CreaTasks> {
 class TaskItem {
   final String taskText;
   bool important = false;
-  final setStateParent;
+  final setStateParent; // Usare setStateParent((){}) per richiamare setState del padre
 
   TaskItem(this.taskText, this.setStateParent);
 
-  Icon getFlagIcon(context) {
+  IconData getFlagIcon(context) {
     if (important) {
-      return Icon(
-        Icons.flag,
-        color: Theme.of(context).colorScheme.secondary,
-      );
+      return Icons.flag;
     } else {
-      return Icon(
-        Icons.flag_outlined,
-        color: Theme.of(context).colorScheme.secondary,
-      );
+      return Icons.flag_outlined;
     }
   }
 
@@ -119,11 +139,14 @@ class TaskItem {
           ),
           IconButton(
               onPressed: () {
-                setStateParent((){
+                setStateParent(() {
                   important = !important;
                 });
               },
-              icon: getFlagIcon(context))
+              icon: Icon(
+                getFlagIcon(context),
+                color: Theme.of(context).colorScheme.secondary,
+              ))
         ],
       );
 }

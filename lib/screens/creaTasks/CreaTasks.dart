@@ -20,7 +20,7 @@ class _CreaTasksState extends State<CreaTasks> {
 
   void _aggiungiUnaTask(String task) {
     setState(() {
-      _listaTasks.add(TaskItem(task));
+      _listaTasks.add(TaskItem(task, setState));
     });
     taskController.clear();
   }
@@ -83,16 +83,47 @@ class _CreaTasksState extends State<CreaTasks> {
 /// A ListItem that contains data to display a message.
 class TaskItem {
   final String taskText;
+  bool important = false;
+  final setStateParent;
 
-  TaskItem(this.taskText);
+  TaskItem(this.taskText, this.setStateParent);
+
+  Icon getFlagIcon(context) {
+    if (important) {
+      return Icon(
+        Icons.flag,
+        color: Theme.of(context).colorScheme.secondary,
+      );
+    } else {
+      return Icon(
+        Icons.flag_outlined,
+        color: Theme.of(context).colorScheme.secondary,
+      );
+    }
+  }
 
   //TODO: gestione della modifica del task => corrisponde modifica nella lista
-  Widget buildTaskItem(BuildContext context) => TextField(
-        controller: TextEditingController(text: taskText),
-        decoration: InputDecoration(
-            icon: Icon(
-          Icons.star,
-          color: Theme.of(context).colorScheme.secondary,
-        )),
+  Widget buildTaskItem(BuildContext context) => Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Expanded(
+            child: TextField(
+              controller: TextEditingController(text: taskText),
+              decoration: InputDecoration(
+                  icon: Icon(
+                Icons.star,
+                color: Theme.of(context).colorScheme.secondary,
+              )),
+            ),
+          ),
+          IconButton(
+              onPressed: () {
+                setStateParent((){
+                  important = !important;
+                });
+              },
+              icon: getFlagIcon(context))
+        ],
       );
 }

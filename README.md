@@ -1,16 +1,19 @@
-# kanbyme
+# KANBYME
 
-A new Flutter project.
+KANBYME, applicazione open source per l'organizzazione della propria giornata e di crescita personale!
 
-## Getting Started
+Crea ogni giorno la tua kanban board e raggiungi tutti i tuoi obiettivi!
 
-This project is a starting point for a Flutter application.
+> E se la nostra vita fosse un grande progetto ==ongoing==?
 
-A few resources to get you started if this is your first Flutter project:
+## Development targert
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Smartphone andoid
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Grande personalizzazione
+
+* Scadenza della kanban board
+* Numero di colonne della board
+* Nome delle colonne
+* Limite del "WIP" (per ogni colonna)
+* 
